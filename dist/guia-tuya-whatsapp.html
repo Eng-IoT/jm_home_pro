@@ -1,0 +1,124 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tuya + WhatsApp</title><style>*{box-sizing:border-box}body{margin:0;background:#eff3fb;color:#233049;font:16px/1.7 system-ui,-apple-system,Segoe UI,sans-serif}header{padding:48px max(24px,calc((100% - 980px)/2));background:linear-gradient(125deg,#152844,#43316c);color:white}header small{color:#9ee6d6;letter-spacing:2px}header h1{margin:10px 0;font-size:clamp(26px,4vw,42px);line-height:1.2}header p{max-width:760px;margin-bottom:0;color:#d3dcec}main{max-width:980px;margin:32px auto 70px;padding:34px;background:white;border-radius:18px;box-shadow:0 12px 45px #21345b0d}h1,h2,h3{line-height:1.3;color:#1c3462}h2{margin-top:44px;border-top:1px solid #dfe6f2;padding-top:28px}h3{margin-top:28px}p{margin:14px 0}a{color:#365bc1;text-underline-offset:3px}pre{overflow:auto;border-radius:10px;background:#162338;color:#d7f5e9;padding:18px;font-size:13px}code{font:13px/1.6 ui-monospace,Consolas,monospace;overflow-wrap:anywhere}p code,td code,li code{background:#eef2fa;padding:2px 5px;border-radius:4px}.table-wrap{overflow:auto;margin:20px 0}table{width:100%;border-collapse:collapse;font-size:14px;text-align:left}th{background:#edf2fb;color:#233e75}th,td{border-bottom:1px solid #e2e8f2;padding:12px;vertical-align:top}li{margin:9px 0}.notice{background:#edf8f4;border-left:4px solid #219678;padding:18px;border-radius:6px}.actions{display:flex;gap:12px;flex-wrap:wrap}.actions a{background:#304bb5;color:white;padding:12px 18px;border-radius:10px;text-decoration:none;font-weight:600}footer{text-align:center;color:#62728a;font-size:12px;padding:20px}@media(max-width:650px){main{margin:18px 12px;padding:20px}header{padding:30px 22px}td,th{padding:9px;font-size:12px}}@media print{body{background:white}main{box-shadow:none;margin:0}header{background:white;color:#152844;padding:15px}header p,header small{color:#334}a{color:inherit}pre{white-space:pre-wrap}h2{break-after:avoid}.actions{display:none}}</style></head><body><header><small>JM HOME PRO · R04</small><h1>Tuya + WhatsApp</h1><p>Da configuração do servidor à validação dos equipamentos.</p></header><main><h1>JM CONNECT R04 · Tuya e WhatsApp</h1>
+<p>Guia de instalação e comissionamento — 11/11/2026</p>
+<h2>O que foi implementado</h2>
+<p>Você envia um comando de texto ao número do bot. O servidor confere o remetente, identifica o canal cadastrado, consulta as funções Tuya, envia a ação e verifica o estado retornado antes de responder. O painel e a casa 3D utilizam os mesmos canais quando habilitados em modo real.</p>
+<p><strong>Contas e equipamentos reais ainda não foram conectados.</strong> Os testes automatizados utilizam substitutos locais. As credenciais ficam no servidor, sem serem incluídas no navegador ou neste ZIP.</p>
+<h2>1. Requisitos</h2>
+<ul>
+<li>Node.js 24.22.1 ou atualização compatível da série 24, internet e disco persistente.</li>
+<li>Um único processo do JM CONNECT. Não usar múltiplas réplicas ou funções temporárias com este SQLite.</li>
+<li>Projeto Tuya Cloud autorizado a consultar e controlar os dispositivos da conta vinculada.</li>
+<li>Aplicativo e número habilitados na WhatsApp Cloud API da Meta.</li>
+<li>Endereço HTTPS válido do servidor, acessível pela Meta para receber o webhook.</li>
+</ul>
+<p>Ter apenas o app Tuya no tablet ou um número comum de WhatsApp não fornece automaticamente as credenciais de desenvolvedor. Não foi contratada ou provisionada infraestrutura nesta entrega.</p>
+<h2>2. Preparação local</h2>
+<p>Extraia o ZIP e entre na pasta JM_HOME_PRO_R04. Copie os exemplos, sem sobrescrever configurações existentes:</p>
+<pre><code>cp gateway/.env.example gateway/.env
+cp gateway/devices.example.json gateway/devices.json</code></pre>
+<p>No Windows, use Copy-Item ou o gerenciador de arquivos. Não é necessário npm install. Gere a chave administrativa no seu computador:</p>
+<pre><code>node -e &quot;console.log(require(&#x27;node:crypto&#x27;).randomBytes(32).toString(&#x27;hex&#x27;))&quot;</code></pre>
+<p>Salve o resultado como JM_ADMIN_TOKEN em gateway/.env. Gere outro valor independente para WA_VERIFY_TOKEN. Não envie essas chaves no chat, no GitHub ou na pasta dist.</p>
+<h2>3. Projeto Tuya</h2>
+<p>Abra o projeto na Tuya Developer Platform. Confira o data center, os serviços de API e sua validade. Em Devices → Link Tuya App Account → Add App Account, vincule a conta Tuya Smart/Smart Life e verifique os dispositivos disponíveis. Os rótulos podem variar conforme a plataforma.</p>
+<p>Autorize os serviços necessários para token, informações do equipamento, especificação, status e comandos. Confira cotas e eventuais cobranças na própria conta. Não deduza o data center apenas pelo país.</p>
+<div class="table-wrap"><table><thead><tr><th>Variável</th><th>Valor</th></tr></thead><tbody>
+<tr><td>TUYA_CLIENT_ID</td><td>Access ID / Client ID do projeto</td></tr>
+<tr><td>TUYA_CLIENT_SECRET</td><td>Access Secret / Client Secret do projeto</td></tr>
+<tr><td>TUYA_REGION</td><td>Chave do data center abaixo</td></tr>
+</tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>Chave</th><th>Endpoint</th></tr></thead><tbody>
+<tr><td>us</td><td>https://openapi.tuyaus.com</td></tr>
+<tr><td>us_east</td><td>https://openapi-ueaz.tuyaus.com</td></tr>
+<tr><td>eu</td><td>https://openapi.tuyaeu.com</td></tr>
+<tr><td>eu_west</td><td>https://openapi-weaz.tuyaeu.com</td></tr>
+<tr><td>cn</td><td>https://openapi.tuyacn.com</td></tr>
+<tr><td>in</td><td>https://openapi.tuyain.com</td></tr>
+<tr><td>sg</td><td>https://openapi-sg.iotbing.com</td></tr>
+</tbody></table></div>
+<p>Mantenha JM_CONTROL_ENABLED=false e WA_CONTROL_ENABLED=false durante o cadastro. Execute npm run gateway e abra http://localhost:8787 no mesmo computador. O servidor também fornece o painel.</p>
+<p>Em Conexões reais → Tuya direto, informe a origem do JM CONNECT e a chave JM_ADMIN_TOKEN. A conexão começa em leitura, sem acionamentos.</p>
+<h2>4. Canais e mapeamentos</h2>
+<p>Na aba Tuya / Smart Life, consulte o ID real do dispositivo. Para saída liga/desliga, selecione as funções booleanas de comando e retorno do mesmo canal, dê um nome único e salve. Em módulo multirrelés, cadastre cada saída separadamente, com mesmo ID físico e códigos distintos. Depois vincule aos cartões em Conexões reais.</p>
+<p>A alternativa por terminal também consulta sem acionar:</p>
+<pre><code>node --env-file=gateway/.env gateway/inspect.mjs ID_REAL_DO_DISPOSITIVO</code></pre>
+<p>Os dados ficam em gateway/devices.json. A interface acrescenta canais somente com ambos os controles pausados. Para alterar/remover, pare o processo, faça backup e edite o JSON. Reinicie após alterações. O nome para WhatsApp é o do servidor; pode ser diferente do cartão.</p>
+<p>O arquivo mapping-illustrative.json é didático e não é carregado automaticamente. Seus códigos não foram identificados na sua instalação. Cada cadastro exige id, name, type, tuyaDeviceId, state e actions. Aliases são nomes alternativos únicos. whatsapp:true libera o canal para mensagens.</p>
+<div class="table-wrap"><table><thead><tr><th>Tipo</th><th>Ações</th><th>Verificação necessária</th></tr></thead><tbody>
+<tr><td>light</td><td>on, off, level</td><td>Alimentação e escala do dimmer</td></tr>
+<tr><td>outlet, tv</td><td>on, off</td><td>Comando e retorno da saída</td></tr>
+<tr><td>fan</td><td>on, off, level</td><td>Alimentação e velocidade</td></tr>
+<tr><td>curtain</td><td>open, close, stop, level</td><td>Movimento, limites e posição</td></tr>
+<tr><td>ac</td><td>on, off, temp</td><td>Refrigeração, setpoint e °C</td></tr>
+</tbody></table></div>
+<p>state.code identifica a propriedade de retorno; state.values mapeia valores para on/off, open/closed, cool ou outros estados permitidos. Ação discreta contém code, value e expect:{code,value}. Comando e retorno devem corresponder ao mesmo canal físico.</p>
+<p>Para level, declare code, statusCode, rawMin e rawMax: 0–100% é convertido para faixa bruta crescente. Luz/ventilador também exigem on/off; 0% envia somente desligar. Escalas invertidas não são suportadas. Para temp, acrescente min, max e unit:&quot;°C&quot;, com faixa dentro de 16–30 °C; confira o fator de escala. Temperatura e modo são ações separadas. Não há aquecimento/Fahrenheit.</p>
+<p>Não use retorno do comando como prova de fim de curso ou medição física. Valide cada equipamento em condições apropriadas.</p>
+<h2>5. HTTPS e execução contínua</h2>
+<p>Configure um proxy HTTPS para o Node em 127.0.0.1:8787. gateway/Caddyfile.example é apenas um exemplo; substitua o domínio e configure DNS, certificado e portas conforme a hospedagem. O proxy deve preservar o corpo original do webhook.</p>
+<p>JM_ALLOWED_ORIGINS aceita origens exatas, separadas por vírgulas, sem caminho ou barra final. Inclua a origem onde você publicar o painel e, se usar localmente, http://localhost:8787. A API exige chave bearer inclusive no mesmo domínio.</p>
+<p>Configure inicialização e reinício automáticos na hospedagem escolhida. Preserve gateway/data/ e seus backups. O ZIP não instala um serviço de sistema. O endereço do webhook deve ser público para a Meta; o painel pode continuar privado. Nunca publique gateway/.env ou o SQLite como arquivos estáticos.</p>
+<h2>6. WhatsApp Cloud API</h2>
+<p>Configure no servidor os parâmetros do aplicativo Meta:</p>
+<div class="table-wrap"><table><thead><tr><th>Variável</th><th>Conteúdo</th></tr></thead><tbody>
+<tr><td>WA_GRAPH_VERSION</td><td>Versão suportada na conta, no formato vNN.0</td></tr>
+<tr><td>WA_PHONE_NUMBER_ID</td><td>ID do número Cloud API, não o telefone visível</td></tr>
+<tr><td>WA_ACCESS_TOKEN</td><td>Token válido autorizado para o número</td></tr>
+<tr><td>WA_APP_SECRET</td><td>Segredo para verificar assinatura dos eventos</td></tr>
+<tr><td>WA_VERIFY_TOKEN</td><td>Valor aleatório escolhido para verificar o webhook</td></tr>
+<tr><td>WA_ALLOWED_SENDERS</td><td>Remetentes autorizados, com país e DDD, só dígitos, separados por vírgula</td></tr>
+<tr><td>WA_BOT_NUMBER</td><td>Número do bot no mesmo formato, para o link de conversa</td></tr>
+<tr><td>WA_CONTROL_ENABLED</td><td>Iniciar false, habilitar após comissionamento</td></tr>
+</tbody></table></div>
+<p>O remetente precisa ser diferente do bot. Confira validade/permissões do token e versão Graph no aplicativo. Não há versão &quot;mais recente&quot; fixada pelo projeto.</p>
+<p>Após reiniciar o servidor, cadastre na Meta a URL HTTPS do JM CONNECT seguida de /webhooks/whatsapp. Use o mesmo verify token e assine os eventos messages. O servidor atende a validação GET e verifica X-Hub-Signature-256 no POST. Nunca coloque a chave administrativa na URL.</p>
+<p>Libere os canais desejados com whatsapp:true. Com os controles pausados, teste ajuda, dispositivos e status NOME. Após validar uma carga de teste, habilite JM_CONTROL_ENABLED=true e WA_CONTROL_ENABLED=true e reinicie. Reconecte o painel para atualizar a configuração exibida.</p>
+<h2>7. Mensagens</h2>
+<p>Use o nome exato ou alias cadastrado; a interpretação ignora maiúsculas e acentos. Exemplos abaixo são fictícios.</p>
+<div class="table-wrap"><table><thead><tr><th>Mensagem</th><th>Ação</th></tr></thead><tbody>
+<tr><td>ajuda</td><td>Sintaxe disponível</td></tr>
+<tr><td>dispositivos</td><td>Canais liberados</td></tr>
+<tr><td>status luz da sala</td><td>Estado informado pelo Tuya</td></tr>
+<tr><td>ligar luz da sala</td><td>Ligar saída</td></tr>
+<tr><td>desligar luz da sala</td><td>Desligar saída</td></tr>
+<tr><td>ajustar luz da sala em 50%</td><td>Ajustar escala cadastrada</td></tr>
+<tr><td>abrir cortina da sala</td><td>Abrir</td></tr>
+<tr><td>fechar cortina da sala</td><td>Fechar</td></tr>
+<tr><td>parar cortina da sala</td><td>Parada operacional cadastrada</td></tr>
+<tr><td>temperatura ar da sala em 23 graus</td><td>Setpoint</td></tr>
+</tbody></table></div>
+<p>Uma ação por mensagem, até 180 caracteres. Negações, condições e ambiguidades são recusadas. Áudio, anexos, cenas, grupos, agendamentos e alertas proativos não foram implementados.</p>
+<p>Aceita mensagens com até cinco minutos de idade, até dez por remetente/minuto. Respostas são imediatas ao remetente; não há envio espontâneo. Aceite Meta e entrega são separados; confirmação de entrega depende do evento do provedor.</p>
+<h2>8. Operação e manutenção</h2>
+<ul>
+<li>Consulta periódica do painel a cada 60 s e após comandos; cache de leitura de 10 s. Cada equipamento físico requer informação e status. Observe cotas.</li>
+<li>Aceite Tuya sem retorno esperado gera incerteza. Confira a carga antes de repetir. Não há prazo garantido de comunicação.</li>
+<li>Mensagem duplicada com mesmo ID não repete a ação. Queda durante operação deixa registro incerto, sem retomada automática. Nova mensagem é nova solicitação.</li>
+<li>SQLite mantém registros por sete dias. Texto recebido é removido após processamento; telefone, resposta, IDs e resultados ficam durante a retenção. Proteja banco/backups e evite registrar corpos/tokens no proxy.</li>
+<li>Desconectar painel não desliga cargas nem pausa WhatsApp. Para pausar bot, WA_CONTROL_ENABLED=false e reinício; para bloquear também painel Tuya, JM_CONTROL_ENABLED=false.</li>
+<li>Chaves Tuya/Meta ficam no servidor. A chave administrativa fica somente na memória da aba; reabrir exige informá-la novamente.</li>
+</ul>
+<h2>9. Comissionamento pendente</h2>
+<ol>
+<li>Registrar modelo, canal, funções, valores, retorno, data center e versões, sem segredos.</li>
+<li>Em leitura, comparar estados no Tuya e painel sem acionamento automático.</li>
+<li>Testar uma carga e comparar painel, nuvem e equipamento físico.</li>
+<li>Testar remetente autorizado e outro não autorizado; o segundo não deve acionar nem receber informações.</li>
+<li>Conferir negação, nome desconhecido, offline, duplicata, queda de internet e reinício.</li>
+<li>Verificar resposta no telefone. Aceite HTTP não comprova entrega.</li>
+<li>Validar tablet físico em retrato/paisagem, menu, toque e casa 3D; conferir cada ajuste utilizado.</li>
+</ol>
+<p>Proteções elétricas, permissivos e funções de segurança pertencem à instalação; não são substituídos pelo software.</p>
+<h2>Referências oficiais consultadas</h2>
+<ul>
+<li><a href="https://developer.tuya.com/en/docs/iot/new-singnature?id=Kbw0q34cs2e5g">Tuya — assinatura</a>, 05/01/2026.</li>
+<li><a href="https://developer.tuya.com/en/docs/cloud/6c1636a9bd?id=Ka7kjumkoa53v">Tuya — token</a>, 22/05/2026.</li>
+<li><a href="https://developer.tuya.com/en/docs/iot/link-devices?id=Ka471nu1sfmkl">Tuya — vincular dispositivos</a>.</li>
+<li><a href="https://developer.tuya.com/en/docs/cloud/68c2e82f73?id=Kag2ybtxwlb9w">Tuya — especificação</a>.</li>
+<li><a href="https://developer.tuya.com/en/docs/cloud/e2512fb901?id=Kag2yag3tiqn5">Tuya — comandos</a>.</li>
+<li><a href="https://developer.tuya.com/en/docs/iot/api-request?id=Ka4a8uuo1j4t4">Tuya — data centers</a>.</li>
+<li><a href="https://github.com/WhatsApp/WhatsApp-Nodejs-SDK/blob/main/website/docs/receivingMessages.md">WhatsApp oficial — recebimento</a> e <a href="https://whatsapp.github.io/WhatsApp-Nodejs-SDK/api-reference/webhooks/start/">webhook</a>. Referências de protocolo; não usamos esse SDK como dependência.</li>
+<li><a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/get-started">Meta — Cloud API</a>. Parte da documentação exigiu login; versão e permissões precisam ser conferidas na conta.</li>
+<li><a href="https://nodejs.org/download/release/v24.22.1/docs/api/sqlite.html">Node.js — SQLite</a>.</li>
+<li><a href="https://caddyserver.com/docs/quick-starts/https">Caddy — HTTPS</a>.</li>
+</ul></main><footer>Joelson Mendes · Código, configuração e comissionamento · 11/11/2026</footer></body></html>
