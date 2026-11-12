@@ -1,1 +1,15 @@
-{"name":"jm-home-pro","version":"2.0.0","private":true,"type":"module","scripts":{"check":"node --check dist/app.js && node --check dist/model.js && node --check dist/house.js","test":"node --test tests/*.test.js"}}
+{
+  "name": "jm-home-pro",
+  "version": "4.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "test": "node --test tests/*.test.js",
+    "gateway": "node --env-file=gateway/.env gateway/server.mjs",
+    "demo": "node scripts/serve.mjs"
+  },
+  "engines": {
+    "node": ">=24.22.1 <25"
+  }
+}

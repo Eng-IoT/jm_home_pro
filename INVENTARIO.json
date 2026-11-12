@@ -1,0 +1,233 @@
+{
+  "project": "JM HOME PRO",
+  "revision": "R04",
+  "date": "2026-11-11",
+  "live_hardware_tested": false,
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 113,
+      "sha256": "b4084b59582629816be341ee2988370bebed769f17e8221bfdd10c182f0c9cbe"
+    },
+    {
+      "path": "INICIAR_DEMONSTRACAO.cmd",
+      "bytes": 288,
+      "sha256": "f06ddd90a02adbc73f4f621238a1d28d389d9ad0577881a5cfd4aed1a1d2e779"
+    },
+    {
+      "path": "LEIA_PRIMEIRO.html",
+      "bytes": 4285,
+      "sha256": "d0e11fd32b5af7f6b1715244fb554cec54b414d8c0adbb5ec970bddf54e99cbc"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3728,
+      "sha256": "bef3d4cea75a89164dfcae837f52a34cc6fb34e439da72bb40e97b71ad868fc4"
+    },
+    {
+      "path": "dist/app.js",
+      "bytes": 48805,
+      "sha256": "af8ca28076049dda5898b9c784c498c1e314c0a3f2de8e4e6cabe608e4ffdaba"
+    },
+    {
+      "path": "dist/assets/icon.svg",
+      "bytes": 421,
+      "sha256": "b83da7a03234ba874d8ea620c1e89c70676cd6b730dbf826f642dbb2f4382f88"
+    },
+    {
+      "path": "dist/bridge-client.js",
+      "bytes": 4641,
+      "sha256": "65371b213819d0fd9cb1e0d02c1304ca7f347fdab93de43f516b018b18af21c5"
+    },
+    {
+      "path": "dist/connections.js",
+      "bytes": 13723,
+      "sha256": "9f4c78b6340af301caeff3c201f18bd23f058e3e07478145632bb4635c2f97c2"
+    },
+    {
+      "path": "dist/guia-conexao.html",
+      "bytes": 9316,
+      "sha256": "a5f2a34d6fe82c70c88f338a9d573a823e46351c13950995666c8c879a672bf2"
+    },
+    {
+      "path": "dist/guia-tuya-whatsapp.html",
+      "bytes": 16020,
+      "sha256": "00753c8f106ab76a97a4737d91b415d8edceb1dc93f33b539738e8c691d016d9"
+    },
+    {
+      "path": "dist/ha-client.js",
+      "bytes": 6769,
+      "sha256": "1fa87f04d6b3f3b99c6c4d31045f34d8f79166ad3fba16dc2cfef541dd1686e6"
+    },
+    {
+      "path": "dist/ha-domain.js",
+      "bytes": 5207,
+      "sha256": "1f73c22bcebdef16fe42a36830b92fe7ae6ca136cf2396947dbed53d742225d3"
+    },
+    {
+      "path": "dist/house.js",
+      "bytes": 9989,
+      "sha256": "8b47ab83abcea7c2b9440bf5336bd84277a9181508d971c1b5c575da6d879da9"
+    },
+    {
+      "path": "dist/icons.js",
+      "bytes": 2896,
+      "sha256": "a31ed8070859dceb25c9cbd4b3944388f979d29f5fa1f7b2bf1f3a375908fd77"
+    },
+    {
+      "path": "dist/index.html",
+      "bytes": 816,
+      "sha256": "86d892937b3873bd7346eb54c97d4cf20db9d6fc461a032e8703d561b3f198e2"
+    },
+    {
+      "path": "dist/model.js",
+      "bytes": 13087,
+      "sha256": "9a960b5edf078e0978195c88d28d7821c226aff5c53496cbecbf796ce8960180"
+    },
+    {
+      "path": "dist/styles.css",
+      "bytes": 48627,
+      "sha256": "da0daf040af8c2b62943f6cd8dc5b3ef0bd22494f21978c1e3bfc1d864ed9d8d"
+    },
+    {
+      "path": "dist/tuya-pages.js",
+      "bytes": 8062,
+      "sha256": "796e6b3213c0f15e1e51fcc7e2392280f3e8396611cac42852212a55acf9c81a"
+    },
+    {
+      "path": "dist/wa-commands.js",
+      "bytes": 2393,
+      "sha256": "eb46457cc79050b5d2dafbfac42926c62b7c14198cc47c0b1b843c7550e25ccf"
+    },
+    {
+      "path": "docs/INTEGRACAO.md",
+      "bytes": 6383,
+      "sha256": "7e2562b8255d464796956c53b836e74cafc12836cd9c36b5ae4a55e7f17ba3dd"
+    },
+    {
+      "path": "docs/TUYA_WHATSAPP.md",
+      "bytes": 11916,
+      "sha256": "f93d454ad4ed3de0ad7b88e77ba5491cf1c23ba316c497b361254185d80f8ec1"
+    },
+    {
+      "path": "docs/VALIDACAO.md",
+      "bytes": 1633,
+      "sha256": "98e0fdd0c7fce1d2009d59e45680ee3b123b4751684c9457cb6f2fd3c31d1901"
+    },
+    {
+      "path": "docs/VALIDACAO_R03_HISTORICO.md",
+      "bytes": 4214,
+      "sha256": "d2a1e5dc29680f0cdd5dd07181f4b95c1f0637268d38d9542a81e7eb97701e1a"
+    },
+    {
+      "path": "docs/r03-conexoes.png",
+      "bytes": 102296,
+      "sha256": "59000f1a1f7108bdfd92502564737cf22a70c0c203984213dbab0bc79d0d8e5d"
+    },
+    {
+      "path": "gateway/.env.example",
+      "bytes": 759,
+      "sha256": "2529503a9b122f29099ae87b30804252e62d91f7730bb520f7a1d193a720b3f0"
+    },
+    {
+      "path": "gateway/Caddyfile.example",
+      "bytes": 130,
+      "sha256": "ed3374eac495e27af8a4222d6ad05ab04721dff83376d8929d174daabee42c22"
+    },
+    {
+      "path": "gateway/controller.mjs",
+      "bytes": 5151,
+      "sha256": "58616e85bec1e9b440d969ad1ce52beb3520ebe109c37cfa8ba2c043ba572c90"
+    },
+    {
+      "path": "gateway/devices.example.json",
+      "bytes": 27,
+      "sha256": "b99e53e60a30935cece31213691cd444044fcbf3a7e64fc99b45e82fe9f1144f"
+    },
+    {
+      "path": "gateway/devices.mjs",
+      "bytes": 7842,
+      "sha256": "525d97492834a440288ed34651bf19be80a64d84274e580b2b4570d0fb9ac38d"
+    },
+    {
+      "path": "gateway/http.mjs",
+      "bytes": 5825,
+      "sha256": "ae6a6564a2ae998c6dfd4fd073c911f2e6841bdb7effed4afc4c0f1baa33614e"
+    },
+    {
+      "path": "gateway/inspect.mjs",
+      "bytes": 294,
+      "sha256": "3acdc2d21f6fc5c202adbd183d3cf8b398c27bab087ac21843d0f5f2a5d0ae54"
+    },
+    {
+      "path": "gateway/mapping-illustrative.json",
+      "bytes": 853,
+      "sha256": "17f95ebe44484676f154c2f84010256b30b6d65c45e3fddb6ba572de5687ab3c"
+    },
+    {
+      "path": "gateway/server.mjs",
+      "bytes": 4538,
+      "sha256": "5090b49b5442a5b59c6494d2039c4c7a7b0e21207fc7862b52e5500232dcee8f"
+    },
+    {
+      "path": "gateway/store.mjs",
+      "bytes": 2887,
+      "sha256": "f17af4215a19d7aa00eb846051eae6d101e549b3bbdb413e863141ff8441370c"
+    },
+    {
+      "path": "gateway/tuya.mjs",
+      "bytes": 3545,
+      "sha256": "4f9beb64164e291d22558515b98bd589040be4bf8566c2070f3c575f8934e44e"
+    },
+    {
+      "path": "gateway/whatsapp.mjs",
+      "bytes": 4406,
+      "sha256": "b08076ee07cdcdad0f5642bede346c29dd74199e33c1c6420b099909d08e34d6"
+    },
+    {
+      "path": "package.json",
+      "bytes": 342,
+      "sha256": "8217a61f3b34e2132dee0e45dec9382d0e949595afd317301f6b1f92d9a3a3d6"
+    },
+    {
+      "path": "scripts/check.mjs",
+      "bytes": 378,
+      "sha256": "7156e6e222151187c16e9d3a581ed9249cc4e2d017bb98a96ceb50204bd425cb"
+    },
+    {
+      "path": "scripts/package-gateway.py",
+      "bytes": 8487,
+      "sha256": "c6f1c68004e4dff4a0a661c5eef60829f46c0bfaf85b05fc0b4a7d16338c2e84"
+    },
+    {
+      "path": "scripts/serve.mjs",
+      "bytes": 1005,
+      "sha256": "768b198e64604f1e7a838f37ea4781286cc3dd22c090fd1b2e173307bc6b04ac"
+    },
+    {
+      "path": "tests/connections.test.js",
+      "bytes": 9731,
+      "sha256": "aae1c69f89e0cfbd77795d426f1432965e7a1d1e8b58a3d88b0164107381577a"
+    },
+    {
+      "path": "tests/fake_ha.py",
+      "bytes": 3129,
+      "sha256": "f50d5567d4aaf70825f8055fb299dae7a4cfb87b3566b9c786e37b980f71b84c"
+    },
+    {
+      "path": "tests/gateway.test.js",
+      "bytes": 14990,
+      "sha256": "4760f5fee5c9958528b173bf0d1a333570bce7d58b6899713827963803a2830a"
+    },
+    {
+      "path": "tests/model.test.js",
+      "bytes": 4104,
+      "sha256": "a580378bbda7b5d6d4ec74be2bcc2d3eed3ce9db7aabfdacf18fd8b974720aaf"
+    },
+    {
+      "path": "vercel.json",
+      "bytes": 125,
+      "sha256": "acfe212b068a6ba684454f1e503a6481bff9c884d71b4ad4babda50ba684698b"
+    }
+  ]
+}

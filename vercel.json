@@ -1,6 +1,1 @@
-{
-  "version": 2,
-  "buildCommand": null,
-  "outputDirectory": "dist",
-  "cleanUrls": true
-}
+{"framework":null,"buildCommand":"npm run check","installCommand":"echo Sem dependencias externas","outputDirectory":"dist"}

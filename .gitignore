@@ -2,3 +2,8 @@ node_modules/
 .sites-runtime/
 .env*
 *.tar.gz
+
+!gateway/.env.example
+gateway/devices.json
+gateway/data/
+*.sqlite*
