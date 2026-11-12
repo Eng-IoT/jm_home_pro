@@ -1,0 +1,4 @@
+# Troque pelo domínio do seu servidor e configure DNS/HTTPS.
+jm-connect.seu-dominio.example {
+    reverse_proxy 127.0.0.1:8787
+}

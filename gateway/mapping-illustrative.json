@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "notice": "DIDÁTICO: não usar sem conferir as funções reais do equipamento.",
+  "devices": [
+    {
+      "id": "luz_sala",
+      "name": "Luz da sala",
+      "type": "light",
+      "tuyaDeviceId": "SUBSTITUIR_PELO_ID_REAL",
+      "aliases": [
+        "luz principal"
+      ],
+      "whatsapp": false,
+      "state": {
+        "code": "switch_led",
+        "values": {
+          "on": true,
+          "off": false
+        }
+      },
+      "actions": {
+        "on": {
+          "code": "switch_led",
+          "value": true,
+          "expect": {
+            "code": "switch_led",
+            "value": true
+          }
+        },
+        "off": {
+          "code": "switch_led",
+          "value": false,
+          "expect": {
+            "code": "switch_led",
+            "value": false
+          }
+        }
+      }
+    }
+  ]
+}
